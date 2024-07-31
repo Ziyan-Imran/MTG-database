@@ -1,5 +1,6 @@
+use mtg_database::connection::{check_connection, initialize_db};
 use mtg_database::csv_entry;
-use mtg_database::{check_connection, initialize_db};
+//use mtg_database::{check_connection, initialize_db};
 use std::{env, error::Error, ffi::OsString, process};
 
 fn main() {

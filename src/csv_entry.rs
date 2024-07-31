@@ -1,11 +1,32 @@
 // Define a struct to handle all CSV entires
 use serde::{Deserialize, Serialize};
+use std::error::Error;
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(untagged)]
 // Enum to handle Power/Toughness/Defense of cards
 // These values can either be an int, or a combination of strings
 pub enum CardLayers {
+    Int(u64),
+    String(String),
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(untagged)]
+// Enum to handle the variation tag
+// Variations can be an int, or a combination of strings
+pub enum CardVariations {
+    Int(u64),
+    String(String),
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(untagged)]
+// Enum to handle the converted manacost section
+// Variations can be an int, or a combination of strings
+// Some cards have multiple types of CMC values. For example, split cards
+// can have a value of 1 or 2 depending on the mode of spell(s) chosen
+pub enum ConvertedManacostVariations {
     Int(u64),
     String(String),
 }
@@ -23,7 +44,7 @@ pub struct Entry {
     loyalty: Option<u32>,
     defense: Option<CardLayers>,
     manacost: Option<String>,
-    converted_manacost: Option<i32>,
+    converted_manacost: Option<ConvertedManacostVariations>,
     artist: Option<String>,
     flavor: Option<String>,
     color: Option<String>,
@@ -33,9 +54,9 @@ pub struct Entry {
     rating: Option<u64>,
     ruling: Option<String>,
     #[serde(deserialize_with = "csv::invalid_option")]
-    variation: Option<u64>,
+    variation: Option<CardVariations>,
     #[serde(deserialize_with = "csv::invalid_option")]
-    variation_local: Option<u64>,
+    variation_local: Option<CardVariations>,
     ability: Option<String>,
     #[serde(rename = "pricing_EUR")]
     pricing_euro: Option<String>,
