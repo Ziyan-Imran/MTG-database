@@ -5,6 +5,7 @@ use std::{
     time::Duration,
 };
 
+/// Contains the config values for the MTG database
 pub struct MtgConfigs {
     // Config to hold .env values
     pub username: String,
@@ -29,6 +30,8 @@ impl MtgConfigs {
     }
 }
 
+/// Initialize a PostgreSQL database to contain the MTG card information
+/// If necessary, create a table with the name "mtg_cards"
 pub fn initialize_db() -> Result<(), postgres::Error> {
     let mut client = Client::connect("postgresql://zimran:%mpEz3Q^@172.25.244.6/mtg", NoTls)?;
 
@@ -165,9 +168,9 @@ pub fn get_env_values() -> Result<MtgConfigs, Box<dyn std::error::Error>> {
     Ok(user_configs)
 }
 
+/// Checks if the connection to the database was already created.
+/// Returns a Boolean to indicate connection status, or an Error
 pub fn check_connection() -> Result<bool, Box<dyn std::error::Error>> {
-    // Checks if the connection to the database was already created
-
     // Get env values to build Client configs
     let user_configs = get_env_values()?;
     let mut db_config: Config = Config::new();

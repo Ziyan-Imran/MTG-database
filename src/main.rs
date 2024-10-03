@@ -5,10 +5,16 @@ use std::{env, error::Error, ffi::OsString, process};
 
 fn main() {
     if let Ok(connection_status) = check_connection() {
-        println!("Database connection status: {:#?}", connection_status);
+        println!(
+            "Database previously initialized. Connection status: {:#?}",
+            connection_status
+        );
     } else {
         let db_connection = initialize_db();
-        println!("Starting connection, {:#?}", db_connection);
+        println!(
+            "Starting connection to database. Database connection: {:#?}",
+            db_connection
+        );
     }
     if let Err(err) = run() {
         println!("{:#?}", err);
@@ -27,7 +33,7 @@ fn run() -> Result<(), Box<dyn Error>> {
     for result in rdr.deserialize() {
         let record: csv_entry::Entry = result?;
         // let serialized = serde_json::to_string(&record)?;
-        // println!("{:#?}", record);
+        // println!("{:#?}", serialized);
         stored_entries.push(record);
     }
     Ok(())

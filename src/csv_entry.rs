@@ -2,30 +2,30 @@
 use serde::{Deserialize, Serialize};
 use std::error::Error;
 
+/// Enum to handle Power/Toughness/Defense of cards
+/// These values can either be an int, or a combination of strings
 #[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(untagged)]
-// Enum to handle Power/Toughness/Defense of cards
-// These values can either be an int, or a combination of strings
 pub enum CardLayers {
     Int(u64),
     String(String),
 }
 
+/// Enum to handle the variation tag
+/// Variations can be an int, or a combination of strings
 #[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(untagged)]
-// Enum to handle the variation tag
-// Variations can be an int, or a combination of strings
 pub enum CardVariations {
     Int(u64),
     String(String),
 }
 
+/// Enum to handle the converted manacost section
+/// Variations can be an int, or a combination of strings
+/// Some cards have multiple types of CMC values. For example, split cards
+/// can have a value of 1 or 2 depending on the mode of spell(s) chosen
 #[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(untagged)]
-// Enum to handle the converted manacost section
-// Variations can be an int, or a combination of strings
-// Some cards have multiple types of CMC values. For example, split cards
-// can have a value of 1 or 2 depending on the mode of spell(s) chosen
 pub enum ConvertedManacostVariations {
     Int(u64),
     String(String),
